@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="CykeMaps.UI.Sheets.SettingsSheet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CykeMaps.UI.Sheets"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:XAML="Windows.UI.Xaml"
+    mc:Ignorable="d"
+    DataContext="{Binding settings, RelativeSource={RelativeSource Self}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Pivot Title="Einstellungen" Grid.Row="1">
+            <PivotItem Header="Allgemein">
+                <ScrollViewer>
+                    <StackPanel>
+                        <ToggleSwitch x:Name="PositionSwitch" Header="Standort verwenden" IsOn="{Binding UseLocation, Mode=TwoWay}" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="Oberfläche">
+                <ScrollViewer>
+                    <StackPanel>
+                        <ComboBox x:Name="ThemeComboBox"
+                                  Header="Theme"
+                                  DisplayMemberPath="Value" 
+                                  SelectedValuePath="Key"
+                                  SelectedValue="{Binding Path=AppTheme, Mode=TwoWay}"/>
+                        <TextBlock TextWrapping="Wrap" Text="Karte" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,8,0,0"/>
+                        <ToggleSwitch x:Name="ZoomSwitch" Header="Zoomregler" IsOn="{Binding ShowZoomControl, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        <ToggleSwitch x:Name="RotationSwitch" Header="Rotationsregler" IsOn="{Binding ShowRotationControl, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        <ToggleSwitch x:Name="TiltSwitch" Header="Kippregler" IsOn="{Binding ShowTiltControl, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        <TextBlock TextWrapping="Wrap" Text="Info" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,8,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <Button Content="Bewerten" d:LayoutOverrides="Width"/>
+                            <Button Content="Feedback abgeben" d:LayoutOverrides="Width" Margin="8,0"/>
+                        </StackPanel>
+                        <TextBlock TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}" Margin="0,8,0,0">
+                			<Run Text="Version 1.0.0.0"/>
+                			<LineBreak/>
+                			<Run Text="© Ludwig Waffenschmidt"/>
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="Info">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <Button Content="Bewerten" d:LayoutOverrides="Width"/>
+                            <Button Content="Feedback abgeben" d:LayoutOverrides="Width" Margin="8,0"/>
+                        </StackPanel>
+                        <TextBlock TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}" Margin="0,8,0,0">
+                			<Run Text="Version 1.0.0.0"/>
+                			<LineBreak/>
+                			<Run Text="© Ludwig Waffenschmidt"/>
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

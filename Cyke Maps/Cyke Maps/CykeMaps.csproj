@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{DAC613B1-0D65-4586-BDD9-26018EAAAA53}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CykeMaps</RootNamespace>
+    <AssemblyName>CykeMaps</AssemblyName>
+    <DefaultLanguage>de-DE</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>BE2FF7716DE90D7D3F973BC4E2582C086F2C3D55</PackageCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Collection.cs" />
+    <Compile Include="Core\LibraryManager.cs" />
+    <Compile Include="Core\Location\Actions\BasicAction.cs" />
+    <Compile Include="Core\Location\Actions\Actions.cs" />
+    <Compile Include="Core\Location\Actions\Commands\EditFavorite.cs" />
+    <Compile Include="Core\Location\Actions\Commands\Rate.cs" />
+    <Compile Include="Core\Location\Actions\Commands\ShowOpeningHours.cs" />
+    <Compile Include="Core\Location\Actions\Commands\ShowCategory.cs" />
+    <Compile Include="Core\Location\Actions\Commands\VisitWebsite.cs" />
+    <Compile Include="Core\Location\Actions\Commands\SendEmail.cs" />
+    <Compile Include="Core\Location\Actions\Commands\RouteFrom.cs" />
+    <Compile Include="Core\Location\Actions\Commands\Share.cs" />
+    <Compile Include="Core\Location\Actions\Commands\ShowOnMap.cs" />
+    <Compile Include="Core\Location\Actions\Commands\RouteTo.cs" />
+    <Compile Include="Core\Location\Actions\Commands\Call.cs" />
+    <Compile Include="Core\Location\Actions\Commands\UnPinFromStart.cs" />
+    <Compile Include="Core\Location\Actions\Commands\PinToStart.cs" />
+    <Compile Include="Core\Location\Actions\Commands\RemoveFavorite.cs" />
+    <Compile Include="Core\Location\Actions\Commands\AddFavorite.cs" />
+    <Compile Include="Core\Location\GeocodingLocation.cs" />
+    <Compile Include="Core\Location\GeolocationManager.cs" />
+    <Compile Include="Core\Location\GeopointExtensions.cs" />
+    <Compile Include="Core\Location\IAction.cs" />
+    <Compile Include="Core\Location\Favorite.cs" />
+    <Compile Include="Core\SettingsManager.cs" />
+    <Compile Include="Core\gpx.cs" />
+    <Compile Include="Core\Location\ILocation.cs" />
+    <Compile Include="Core\Location\BasicLocation.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CalibrationBar.xaml.cs">
+      <DependentUpon>CalibrationBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MapGeolocationPin.xaml.cs">
+      <DependentUpon>MapGeolocationPin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MapInteractionButton.xaml.cs">
+      <DependentUpon>MapInteractionButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MapPin.xaml.cs">
+      <DependentUpon>MapPin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\MathCoverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Navigation\NavigationManager.cs" />
+    <Compile Include="UI\Navigation\State.cs" />
+    <Compile Include="UI\Sheets\AddFavoriteSheet.xaml.cs">
+      <DependentUpon>AddFavoriteSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Sheets\LibrarySheet.xaml.cs">
+      <DependentUpon>LibrarySheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Sheets\LocationSheet.xaml.cs">
+      <DependentUpon>LocationSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Sheets\SettingsSheet.xaml.cs">
+      <DependentUpon>SettingsSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SnapPointsPanel.cs" />
+    <Compile Include="UI\WrapPanel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\cykeAppList.scale-100.png" />
+    <Content Include="Assets\cykeAppList.scale-125.png" />
+    <Content Include="Assets\cykeAppList.scale-150.png" />
+    <Content Include="Assets\cykeAppList.scale-200.png" />
+    <Content Include="Assets\cykeAppList.scale-400.png" />
+    <Content Include="Assets\cykeAppList.targetsize-16.png" />
+    <Content Include="Assets\cykeAppList.targetsize-16_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-24.png" />
+    <Content Include="Assets\cykeAppList.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-256.png" />
+    <Content Include="Assets\cykeAppList.targetsize-256_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-32.png" />
+    <Content Include="Assets\cykeAppList.targetsize-32_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-36.png" />
+    <Content Include="Assets\cykeAppList.targetsize-36_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-48.png" />
+    <Content Include="Assets\cykeAppList.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-64.png" />
+    <Content Include="Assets\cykeAppList.targetsize-64_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-72.png" />
+    <Content Include="Assets\cykeAppList.targetsize-72_altform-unplated.png" />
+    <Content Include="Assets\cykeAppList.targetsize-96.png" />
+    <Content Include="Assets\cykeAppList.targetsize-96_altform-unplated.png" />
+    <Content Include="Assets\cykeBadgeLogo.scale-100.png" />
+    <Content Include="Assets\cykeBadgeLogo.scale-125.png" />
+    <Content Include="Assets\cykeBadgeLogo.scale-150.png" />
+    <Content Include="Assets\cykeBadgeLogo.scale-200.png" />
+    <Content Include="Assets\cykeBadgeLogo.scale-400.png" />
+    <Content Include="Assets\cykeLargeTile.scale-100.png" />
+    <Content Include="Assets\cykeLargeTile.scale-125.png" />
+    <Content Include="Assets\cykeLargeTile.scale-150.png" />
+    <Content Include="Assets\cykeLargeTile.scale-200.png" />
+    <Content Include="Assets\cykeLargeTile.scale-400.png" />
+    <Content Include="Assets\cykeMediumTile.scale-100.png" />
+    <Content Include="Assets\cykeMediumTile.scale-125.png" />
+    <Content Include="Assets\cykeMediumTile.scale-150.png" />
+    <Content Include="Assets\cykeMediumTile.scale-200.png" />
+    <Content Include="Assets\cykeMediumTile.scale-400.png" />
+    <Content Include="Assets\cykeSmallTile.scale-100.png" />
+    <Content Include="Assets\cykeSmallTile.scale-125.png" />
+    <Content Include="Assets\cykeSmallTile.scale-150.png" />
+    <Content Include="Assets\cykeSmallTile.scale-200.png" />
+    <Content Include="Assets\cykeSmallTile.scale-400.png" />
+    <Content Include="Assets\cykeSplashScreen.scale-100.png" />
+    <Content Include="Assets\cykeSplashScreen.scale-125.png" />
+    <Content Include="Assets\cykeSplashScreen.scale-150.png" />
+    <Content Include="Assets\cykeSplashScreen.scale-200.png" />
+    <Content Include="Assets\cykeSplashScreen.scale-400.png" />
+    <Content Include="Assets\cykeStoreLogo.scale-100.png" />
+    <Content Include="Assets\cykeStoreLogo.scale-125.png" />
+    <Content Include="Assets\cykeStoreLogo.scale-150.png" />
+    <Content Include="Assets\cykeStoreLogo.scale-200.png" />
+    <Content Include="Assets\cykeStoreLogo.scale-400.png" />
+    <Content Include="Assets\cykeWideTile.scale-100.png" />
+    <Content Include="Assets\cykeWideTile.scale-125.png" />
+    <Content Include="Assets\cykeWideTile.scale-150.png" />
+    <Content Include="Assets\cykeWideTile.scale-200.png" />
+    <Content Include="Assets\cykeWideTile.scale-400.png" />
+    <Content Include="Assets\Icons\route.svg" />
+    <Content Include="Properties\Default.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <DesignData Include="SampleData\BasicLocationSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="SampleData\LocationSheetSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="UI\CalibrationBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MapGeolocationPin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MapInteractionButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MapPin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Sheets\AddFavoriteSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Sheets\LibrarySheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Sheets\LocationSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Sheets\SettingsSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Package.StoreAssociation.xml" />
+    <None Include="project.json" />
+    <None Include="project.lock.json" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

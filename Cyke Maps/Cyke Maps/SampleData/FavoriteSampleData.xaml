@@ -1,0 +1,1 @@
+﻿<Location:Favorite xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Location" xmlns:Location="using:farycle.Core.Location" Address="4567 Main St., Buffalo, NY 98052" Description="Nam maecenas aliquam sed cras integer class praesent curae quisque dis est" Name="Curabitur maecenas phasellus cras aliquam" Symbol="Globe" Timestamp="02/29/2016 15:26:28"/>

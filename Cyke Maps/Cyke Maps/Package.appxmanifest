@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity Name="59071PerfectSoft.CykeMaps" Publisher="CN=A96108A1-7A2D-4163-A0C4-628E99385EE1" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="cfbe757d-619b-4ff2-a5a5-3be6b861c87a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Cyke Maps</DisplayName>
+    <PublisherDisplayName>PerfectSoft</PublisherDisplayName>
+    <Logo>Assets\cykeStoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CykeMaps.App">
+      <uap:VisualElements DisplayName="Cyke Maps" Square150x150Logo="Assets\cykeMediumTile.png" Square44x44Logo="Assets\cykeAppList.png" Description="Cyke Maps" BackgroundColor="#555555">
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets/cykeBadgeLogo.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\cykeWideTile.png" Square310x310Logo="Assets\CykeLargeTile.png" Square71x71Logo="Assets\cykeSmallTile.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\cykeSplashScreen.png" BackgroundColor="#555555" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
+  </Capabilities>
+</Package>

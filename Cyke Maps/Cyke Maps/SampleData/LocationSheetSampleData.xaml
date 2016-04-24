@@ -1,0 +1,6 @@
+﻿<Sheets:LocationSheet xmlns:Sheets="using:CykeMaps.UI.Sheets">
+    <Sheets:LocationSheet.Location>
+        <Location:BasicLocation xmlns:Location="using:CykeMaps.Core.Location" Address="4567 Main St., Buffalo, NY 98052" Description="Vestibulum dis phasellus"  Symbol="MapPin"/>
+    </Sheets:LocationSheet.Location>
+</Sheets:LocationSheet>
+

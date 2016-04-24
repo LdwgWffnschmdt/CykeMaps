@@ -1,0 +1,175 @@
+﻿<UserControl x:Name="userControl"
+    x:Class="CykeMaps.UI.MapPin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CykeMaps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100" 
+    d:DesignWidth="150"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    RequestedTheme="Dark"
+    UseSystemFocusVisuals="True"
+                  GotFocus="Small_GotFocus">
+
+
+    <Border x:Name="RootGrid"
+                  GotFocus="Small_GotFocus">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <Storyboard>
+                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Body">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF424242"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="SmallPinEllipse">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF424242"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Tip">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF424242"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Tip">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <SolidColorBrush Color="Black"/>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Body">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <SolidColorBrush Color="Black"/>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="Appearance">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:1.3" To="Small">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:1.3" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SmallPin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuinticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Duration="0:0:1.3" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SmallPin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuinticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Duration="0:0:0.3" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="LargePin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Duration="0:0:0.4" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="LargePin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition GeneratedDuration="0:0:1.3" To="FullPin">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SmallPin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SmallPin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Duration="0:0:0.9" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="LargePin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuinticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="LargePin" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuinticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="FullPin"/>
+                <VisualState x:Name="Small">
+                    <VisualState.Setters>
+                        <Setter Target="SmallPin.(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Value="1"/>
+                        <Setter Target="SmallPin.(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Value="1"/>
+                        <Setter Target="LargePin.(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Value="0"/>
+                        <Setter Target="LargePin.(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid
+                  GotFocus="Small_GotFocus">
+            <Grid x:Name="SmallPin" Width="20" Height="20"
+                  VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                  RenderTransformOrigin="0.5,0.5"
+                  Tapped="Small_Tapped"
+                  GotFocus="Small_GotFocus"
+                  LostFocus="OnLostFocus"
+                  PointerEntered="OnPointerEntered" 
+                  PointerExited="OnPointerExited"
+                  PointerPressed="OnPointerPressed"
+                  PointerReleased="OnPointerReleased">
+                <Grid.RenderTransform>
+                    <CompositeTransform TranslateY="10"/>
+                </Grid.RenderTransform>
+                <Ellipse x:Name="SmallPinEllipse" Fill="#FF1B1B42"/>
+                <SymbolIcon Symbol="{Binding Symbol, FallbackValue=Target}" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                    <SymbolIcon.RenderTransform>
+                        <CompositeTransform ScaleX="0.7" ScaleY="0.7"/>
+                    </SymbolIcon.RenderTransform>
+                </SymbolIcon>
+            </Grid>
+            <Grid x:Name="LargePin" RenderTransformOrigin="0.5,1">
+                <Grid.RenderTransform>
+                    <CompositeTransform ScaleX="0" ScaleY="0"/>
+                </Grid.RenderTransform>
+                <Rectangle x:Name="Tip" Fill="Black" HorizontalAlignment="Center" Height="20" VerticalAlignment="Bottom" Width="20" RenderTransformOrigin="0.5,0.5"
+                           PointerEntered="OnPointerEntered"
+                           PointerExited="OnPointerExited"
+                           PointerPressed="OnPointerPressed"
+                           PointerReleased="OnPointerReleased">
+                    <Rectangle.RenderTransform>
+                        <CompositeTransform Rotation="45" TranslateY="-4"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+
+                <StackPanel x:Name="Body" Background="Black" Orientation="Horizontal" Height="48" VerticalAlignment="Bottom" Margin="0,0,0,14" RenderTransformOrigin="0.5,0.5"
+                            PointerEntered="OnPointerEntered"
+                            PointerExited="OnPointerExited"
+                            PointerPressed="OnPointerPressed"
+                            PointerReleased="OnPointerReleased">
+                    <StackPanel.RenderTransform>
+                        <CompositeTransform/>
+                    </StackPanel.RenderTransform>
+                    <AppBarButton x:Name="PrimaryButton" Icon="{Binding Symbol}" Background="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                    <StackPanel x:Name="Content" Padding="8,4">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Name}" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Description}" FontSize="13.333" Opacity="0.7"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="CykeMaps.UI.Sheets.AddFavoriteSheet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CykeMaps.UI.Sheets"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TextBoxName" Text="{Binding Name, Mode=TwoWay}" PlaceholderText="{Binding Location.Name}" VerticalAlignment="Top" Padding="14,8" BorderThickness="0" FontSize="24"/>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="12,0,12,12">
+                <TextBlock Text="Adresse" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <TextBox x:Name="TextBoxAddress" Text="{Binding Address, Mode=TwoWay}" PlaceholderText="{Binding Location.Address}" Margin="0,0,0,8"/>
+                <TextBlock Text="Beschreibung" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <TextBox x:Name="TextBoxDescription" Text="{Binding Description, Mode=TwoWay}" PlaceholderText="{Binding Location.Description}" Margin="0,0,0,8"/>
+                <TextBlock Text="Symbol" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <TextBox x:Name="TextBoxSymbol" Text="{Binding Symbol, Mode=TwoWay}" PlaceholderText="{Binding Location.Symbol}" Margin="0,0,0,8"/>
+                <SymbolIcon Symbol="{Binding Symbol}"/>
+
+                <TextBlock Text="Collection" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <TextBox x:Name="TextBoxCollection" Text="{Binding Collection, Mode=TwoWay}" PlaceholderText="Unsortiert" Margin="0,0,0,8"/>
+            </StackPanel>
+        </ScrollViewer>
+        <CommandBar Grid.Row="2">
+            <AppBarButton Icon="Accept" Label="Fertig" Click="Accept" IsEnabled="{Binding Creatable}"/>
+            <AppBarButton Icon="Cancel" Label="Abrechen" Click="Cancel"/>
+        </CommandBar>
+    </Grid>
+</Page>
