@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Reflection;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class Rate : ICommand
+    public class ShowCategory : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -12,7 +13,7 @@ namespace CykeMaps.Core.Location.Actions.Commands
         {
             if (parameter is ILocation)
             {
-                PropertyInfo info = parameter.GetType().GetProperty("rating");
+                PropertyInfo info = parameter.GetType().GetProperty("category");
                 if (info != null && info.GetValue(parameter) != null)
                 {
                     return true;

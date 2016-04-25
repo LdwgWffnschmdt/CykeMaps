@@ -14,7 +14,7 @@ using Windows.ApplicationModel.Core;
 
 
 
-namespace CykeMaps.Core.Location
+namespace CykeMaps.Core
 {
     /// <summary>
     /// Thos one tracks the Current Location of the user as well the Compass

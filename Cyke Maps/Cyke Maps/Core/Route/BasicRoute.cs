@@ -1,13 +1,15 @@
 ﻿using CykeMaps.Core.Actions;
+using CykeMaps.Core.Route;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using System;
 
-namespace CykeMaps.Core.Location
+namespace CykeMaps.Core.Route
 {
-    public class BasicLocation : ILocation
+    public class BasicRoute : IRoute
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -19,13 +21,12 @@ namespace CykeMaps.Core.Location
 
         
 
-        public BasicLocation()
+        public BasicRoute()
         {
             actions = new List<IAction>()
                 {
                     new AddFavoriteAction(),
-                    new ShowOnMapAction(),
-                    new RouteToAction()
+                    new ShowOnMapAction()
                 };
 
             secondaryActions = new List<IAction>()
@@ -56,19 +57,7 @@ namespace CykeMaps.Core.Location
             }
         }
 
-
-        private string address;
-
-        public string Address
-        {
-            get { return address; }
-            set
-            {
-                address = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         private string description;
 
         public string Description
@@ -81,19 +70,19 @@ namespace CykeMaps.Core.Location
             }
         }
 
-        private Geopoint location;
+        private GeoboundingBox boundingBox;
 
-        public Geopoint Location
+        public GeoboundingBox BoundingBox
         {
-            get { return location; }
+            get { return boundingBox; }
             set
             {
-                location = value;
+                boundingBox = value;
                 OnPropertyChanged();
             }
         }
 
-        private string symbol = "Target";
+        private string symbol = "Arrow";
 
         public string Symbol
         {
@@ -132,6 +121,71 @@ namespace CykeMaps.Core.Location
             {
                 secondaryActions = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<BasicGeoposition> Positions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public BasicGeoposition StartPoint
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public double Distance
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public double Downhill
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public double Uphill
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
             }
         }
     }

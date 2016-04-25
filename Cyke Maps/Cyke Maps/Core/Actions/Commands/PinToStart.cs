@@ -1,9 +1,11 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using CykeMaps.Core.Route;
+using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class RouteFrom : ICommand
+    public class PinToStart : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -11,7 +13,13 @@ namespace CykeMaps.Core.Location.Actions.Commands
         {
             if (parameter is ILocation)
             {
-                return true;
+                // TODO: CHECK IF IT IS ALREADY PINNED
+                return false;
+            }
+            else if (parameter is IRoute)
+            {
+                // TODO: CHECK IF IT IS ALREADY PINNED
+                return false;
             }
             else
             {

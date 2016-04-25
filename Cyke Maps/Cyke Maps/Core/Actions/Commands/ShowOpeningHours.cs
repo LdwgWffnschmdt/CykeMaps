@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Reflection;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class VisitWebsite : ICommand
+    public class ShowOpeningHours : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -12,7 +13,7 @@ namespace CykeMaps.Core.Location.Actions.Commands
         {
             if (parameter is ILocation)
             {
-                PropertyInfo info = parameter.GetType().GetProperty("website");
+                PropertyInfo info = parameter.GetType().GetProperty("opening_hours");
                 if (info != null && info.GetValue(parameter) != null)
                 {
                     return true;

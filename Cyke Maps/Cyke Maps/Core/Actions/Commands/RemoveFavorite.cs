@@ -1,8 +1,9 @@
-﻿using CykeMaps.UI.Sheets;
+﻿using CykeMaps.Core.Location;
+using CykeMaps.UI.Sheets;
 using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
     public class RemoveFavorite : ICommand
     {

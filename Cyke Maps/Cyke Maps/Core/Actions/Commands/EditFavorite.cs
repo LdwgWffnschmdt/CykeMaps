@@ -1,16 +1,17 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class ShowOnMap : ICommand
+    public class EditFavorite : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return true;
-            if (parameter is ILocation)
+            if (parameter is Favorite)
             {
                 return true;
             }
@@ -22,7 +23,10 @@ namespace CykeMaps.Core.Location.Actions.Commands
 
         public void Execute(object parameter)
         {
-            if (parameter is ILocation) MainPage.MainNavigationManager.ShowOnMap(parameter as ILocation);
+            if (parameter is Favorite)
+            {
+                MainPage.MainNavigationManager.EditFavorite((ILocation) parameter);
+            }
         }
     }
 }

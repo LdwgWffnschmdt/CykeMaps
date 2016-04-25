@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using CykeMaps.Core.Route;
+using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
     public class UnPinFromStart : ICommand
     {
@@ -9,9 +11,9 @@ namespace CykeMaps.Core.Location.Actions.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (parameter is ILocation)
+            if (parameter is ILocation || parameter is IRoute)
             {
-                // CHECK IF IT IS PINNED
+                // TODO: CHECK IF IT IS PINNED
                 return true;
             }
             else

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions
+namespace CykeMaps.Core.Actions
 {
     public class BasicAction : IAction
     {

@@ -1,4 +1,4 @@
-﻿namespace CykeMaps.Core.Location.Actions
+﻿namespace CykeMaps.Core.Actions
 {
     public class AddFavoriteAction : BasicAction
     {

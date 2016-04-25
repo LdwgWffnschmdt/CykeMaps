@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Windows.Input;
 
-
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class EditFavorite : ICommand
+    public class AddFavorite : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -12,19 +12,19 @@ namespace CykeMaps.Core.Location.Actions.Commands
         {
             if (parameter is Favorite)
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
         public void Execute(object parameter)
         {
-            if (parameter is Favorite)
+            if (parameter is ILocation && !(parameter is Favorite))
             {
-                MainPage.MainNavigationManager.EditFavorite((ILocation) parameter);
+                MainPage.MainNavigationManager.AddFavorite((ILocation) parameter);
             }
         }
     }

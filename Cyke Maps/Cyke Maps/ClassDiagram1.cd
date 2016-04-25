@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CykeMaps.Core.Location.BasicLocation" Collapsed="true">
+    <Position X="69" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAIAAgACAAIAIAAAQCgAIEIAgCAAACAAAACgA=</HashCode>
+      <FileName>Core\Location\BasicLocation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CykeMaps.Core.Location.Favorite" Collapsed="true">
+    <Position X="67.75" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAQAAAAEACAAAAAoEAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Core\Location\Favorite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CykeMaps.Core.Location.GeocodingLocation" Collapsed="true">
+    <Position X="70" Y="19.25" Width="1.5" />
+    <InheritanceLine Type="CykeMaps.Core.Location.BasicLocation" FixedToPoint="true">
+      <Path>
+        <Point X="69.75" Y="18.562" />
+        <Point X="69.75" Y="18.875" />
+        <Point X="70.75" Y="18.875" />
+        <Point X="70.75" Y="19.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAAAAAAAAAABgAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Location\GeocodingLocation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CykeMaps.Core.Route.BasicRoute" Collapsed="true">
+    <Position X="72.75" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAIAAgACAgIAJAAAQAgCAEIAhgAAACAAAACgg=</HashCode>
+      <FileName>Core\Route\BasicRoute.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CykeMaps.Core.Route.FavoriteRoute" Collapsed="true">
+    <Position X="72.75" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAQAAAAEACAAAAAgEAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Core\Route\FavoriteRoute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="CykeMaps.Core.Location.ILocation" Collapsed="true">
+    <Position X="69" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAgAAAAAAIAAAQAAAAAIAACAAAAAAAACAA=</HashCode>
+      <FileName>Core\Location\ILocation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CykeMaps.Core.Route.IRoute" Collapsed="true">
+    <Position X="72.75" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAgAAAgAAJAAAQAACAAIABAAAAAAAAACAg=</HashCode>
+      <FileName>Core\Route\IRoute.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

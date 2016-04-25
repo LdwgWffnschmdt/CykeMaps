@@ -11,6 +11,8 @@ using CykeMaps.UI.Sheets;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using CykeMaps.Core.Route;
+using Windows.UI.Xaml.Controls.Maps;
 
 namespace CykeMaps.UI.Navigation
 {
@@ -423,6 +425,18 @@ namespace CykeMaps.UI.Navigation
                 MapCenter = location.Location,
                 MapZoomLevel = 16,
                 MapHeading = 90,
+                SheetVisibility = Visibility.Hidden
+            };
+
+            NavigateTo(showOnMapState, null);
+        }
+
+        public void ShowOnMap(IRoute route)
+        {
+            State showOnMapState = new State()
+            {
+                MapHeading = 90,
+                //MapElements = new List<MapElement>() { route }; // TODO : BLALBLAB
                 SheetVisibility = Visibility.Hidden
             };
 

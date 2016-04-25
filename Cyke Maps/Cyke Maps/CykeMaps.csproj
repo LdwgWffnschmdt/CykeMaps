@@ -95,29 +95,36 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Collection.cs" />
+    <Compile Include="Core\GooglePoints.cs" />
     <Compile Include="Core\LibraryManager.cs" />
-    <Compile Include="Core\Location\Actions\BasicAction.cs" />
-    <Compile Include="Core\Location\Actions\Actions.cs" />
-    <Compile Include="Core\Location\Actions\Commands\EditFavorite.cs" />
-    <Compile Include="Core\Location\Actions\Commands\Rate.cs" />
-    <Compile Include="Core\Location\Actions\Commands\ShowOpeningHours.cs" />
-    <Compile Include="Core\Location\Actions\Commands\ShowCategory.cs" />
-    <Compile Include="Core\Location\Actions\Commands\VisitWebsite.cs" />
-    <Compile Include="Core\Location\Actions\Commands\SendEmail.cs" />
-    <Compile Include="Core\Location\Actions\Commands\RouteFrom.cs" />
-    <Compile Include="Core\Location\Actions\Commands\Share.cs" />
-    <Compile Include="Core\Location\Actions\Commands\ShowOnMap.cs" />
-    <Compile Include="Core\Location\Actions\Commands\RouteTo.cs" />
-    <Compile Include="Core\Location\Actions\Commands\Call.cs" />
-    <Compile Include="Core\Location\Actions\Commands\UnPinFromStart.cs" />
-    <Compile Include="Core\Location\Actions\Commands\PinToStart.cs" />
-    <Compile Include="Core\Location\Actions\Commands\RemoveFavorite.cs" />
-    <Compile Include="Core\Location\Actions\Commands\AddFavorite.cs" />
+    <Compile Include="Core\Actions\BasicAction.cs" />
+    <Compile Include="Core\Actions\Actions.cs" />
+    <Compile Include="Core\Actions\Commands\EditFavorite.cs" />
+    <Compile Include="Core\Actions\Commands\Rate.cs" />
+    <Compile Include="Core\Actions\Commands\ShowOpeningHours.cs" />
+    <Compile Include="Core\Actions\Commands\ShowCategory.cs" />
+    <Compile Include="Core\Actions\Commands\VisitWebsite.cs" />
+    <Compile Include="Core\Actions\Commands\SendEmail.cs" />
+    <Compile Include="Core\Actions\Commands\RouteFrom.cs" />
+    <Compile Include="Core\Actions\Commands\Share.cs" />
+    <Compile Include="Core\Actions\Commands\ShowOnMap.cs" />
+    <Compile Include="Core\Actions\Commands\RouteTo.cs" />
+    <Compile Include="Core\Actions\Commands\Call.cs" />
+    <Compile Include="Core\Actions\Commands\UnPinFromStart.cs" />
+    <Compile Include="Core\Actions\Commands\PinToStart.cs" />
+    <Compile Include="Core\Actions\Commands\RemoveFavorite.cs" />
+    <Compile Include="Core\Actions\Commands\AddFavorite.cs" />
     <Compile Include="Core\Location\GeocodingLocation.cs" />
-    <Compile Include="Core\Location\GeolocationManager.cs" />
-    <Compile Include="Core\Location\GeopointExtensions.cs" />
-    <Compile Include="Core\Location\IAction.cs" />
+    <Compile Include="Core\GeolocationManager.cs" />
+    <Compile Include="Core\GeopointExtensions.cs" />
+    <Compile Include="Core\Actions\IAction.cs" />
     <Compile Include="Core\Location\Favorite.cs" />
+    <Compile Include="Core\Route\BasicRoute.cs" />
+    <Compile Include="Core\Route\FavoriteRoute.cs" />
+    <Compile Include="Core\Route\IRoute.cs" />
+    <Compile Include="Core\Route\RouteRequest\BasicRouteRequest.cs" />
+    <Compile Include="Core\Route\RouteRequest\IRouteRequest.cs" />
+    <Compile Include="Core\Route\RouteRequest\KomootRouteRequest.cs" />
     <Compile Include="Core\SettingsManager.cs" />
     <Compile Include="Core\gpx.cs" />
     <Compile Include="Core\Location\ILocation.cs" />
@@ -279,10 +286,12 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="project.json" />
     <None Include="project.lock.json" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

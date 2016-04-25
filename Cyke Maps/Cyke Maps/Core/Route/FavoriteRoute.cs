@@ -1,4 +1,5 @@
 ﻿using CykeMaps.Core.Actions;
+using CykeMaps.Core.Location;
 using Geo.Gps;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,15 @@ using System.Xml.Serialization;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
 
-namespace CykeMaps.Core.Location
+namespace CykeMaps.Core.Route
 {
-    public class Favorite : BasicLocation
+    public class FavoriteRoute : BasicRoute
     {
         #region Constructors
 
-        public Favorite()
+        public FavoriteRoute()
         {
             Name = "";
-            Address = "";
             Description = "";
             Symbol = "";
             Collection = "";
@@ -35,25 +35,12 @@ namespace CykeMaps.Core.Location
                     new EditFavoriteAction()
                 };
         }
-
-        public Favorite(GpsData data)
-        {
-            Name = data.Metadata["name"];
-            Description = data.Metadata["desc"];
-            Symbol = data.Metadata["symbol"];
-            Timestamp = DateTime.Parse(data.Metadata["time"]);
-            Location = new Geopoint(new BasicGeoposition()
-            {
-                Latitude = data.Waypoints[0].Coordinate.Latitude,
-                Longitude = data.Waypoints[0].Coordinate.Longitude
-            });
-        }
-
+        
         #endregion
 
         #region File Management
         
-        public async Task<Favorite> LoadFromFile(StorageFile file)
+        public async Task<FavoriteRoute> LoadFromFile(StorageFile file)
         {
             var serializer = new XmlSerializer(typeof(gpxType));
             Stream stream = await file.OpenStreamForReadAsync();
@@ -64,13 +51,13 @@ namespace CykeMaps.Core.Location
             Description = (objectFromXml.metadata.desc == null) ? "" : objectFromXml.metadata.desc;
             Timestamp = (objectFromXml.metadata.time == null) ? DateTime.Now : objectFromXml.metadata.time;
             Symbol = (objectFromXml.metadata.extensions.symbol == null) ? "" : objectFromXml.metadata.extensions.symbol;
-            Address = (objectFromXml.metadata.extensions.address == null) ? "" : objectFromXml.metadata.extensions.address;
+            /*Address = (objectFromXml.metadata.extensions.address == null) ? "" : objectFromXml.metadata.extensions.address;
             Location = new Geopoint(new BasicGeoposition()
             {
                 Latitude = (double) objectFromXml.wpt[0].lat,
                 Longitude = (double)objectFromXml.wpt[0].lon,
                 Altitude = (double)objectFromXml.wpt[0].ele
-            });
+            });*/
 
             return this;
         }
@@ -102,8 +89,7 @@ namespace CykeMaps.Core.Location
                         desc = Description,
                         extensions = new extensionsType()
                         {
-                            symbol = Symbol,
-                            address = Address
+                            symbol = Symbol
                         },
                         author = new personType()
                         {
@@ -112,8 +98,8 @@ namespace CykeMaps.Core.Location
                         timeSpecified = true,
                         time = Timestamp
                     },
-                    creator = "Cyke Maps",
-                    wpt = new wptType[]
+                    creator = "Cyke Maps"
+                    /*wpt = new wptType[]
                     {
                         new wptType()
                         {
@@ -122,7 +108,7 @@ namespace CykeMaps.Core.Location
                             eleSpecified = true,
                             ele = (decimal)Location.Position.Altitude
                         }
-                    }
+                    }*/
                 };
                 serializer.Serialize(stream, objectToSave);
             }
@@ -210,25 +196,6 @@ namespace CykeMaps.Core.Location
                 timestamp = value;
                 OnPropertyChanged();
             }
-        }
-
-        public GpsData ToGpsData()
-        {
-            GpsData data = new GpsData();
-
-            data.Metadata.Add("name", Name);
-            data.Metadata.Add("desc", Description);
-            data.Metadata.Add("time", Timestamp.ToString());
-            data.Metadata.Add("symbol", Symbol);
-            data.Metadata.Add("author", "Cyke Maps");
-
-            Geo.Geometries.Point point = new Geo.Geometries.Point(Location.Position.Latitude,
-                                                        Location.Position.Longitude,
-                                                        Location.Position.Altitude);
-
-            data.Waypoints.Add(point);
-
-            return data;
         }
     }
 }

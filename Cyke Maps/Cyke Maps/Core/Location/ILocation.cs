@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CykeMaps.Core.Actions;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Windows.Devices.Geolocation;
 
 namespace CykeMaps.Core.Location

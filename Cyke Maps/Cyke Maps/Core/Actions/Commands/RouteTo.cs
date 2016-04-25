@@ -1,9 +1,10 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class Share : ICommand
+    public class RouteTo : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -11,7 +12,6 @@ namespace CykeMaps.Core.Location.Actions.Commands
         {
             if (parameter is ILocation)
             {
-                // Why should it not be sharable?
                 return true;
             }
             else

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using CykeMaps.Core.Route;
+using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class PinToStart : ICommand
+    public class Share : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -11,8 +13,13 @@ namespace CykeMaps.Core.Location.Actions.Commands
         {
             if (parameter is ILocation)
             {
-                // CHECK IF IT IS ALREADY PINNED
-                return false;
+                // Why should it not be sharable?
+                return true;
+            }
+            else if (parameter is IRoute)
+            {
+                // Why should it not be sharable?
+                return true;
             }
             else
             {

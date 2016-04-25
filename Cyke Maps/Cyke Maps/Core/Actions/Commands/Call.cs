@@ -1,8 +1,9 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Reflection;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
     public class Call : ICommand
     {

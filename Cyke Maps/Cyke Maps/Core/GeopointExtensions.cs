@@ -5,7 +5,7 @@ using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Services.Maps;
 
-namespace CykeMaps.Core.Location
+namespace CykeMaps.Core
 {
     public static class GeopointExtensions
     {

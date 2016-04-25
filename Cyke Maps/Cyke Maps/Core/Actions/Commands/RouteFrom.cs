@@ -1,9 +1,10 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
+using System;
 using System.Windows.Input;
 
-namespace CykeMaps.Core.Location.Actions.Commands
+namespace CykeMaps.Core.Actions.Commands
 {
-    public class RouteTo : ICommand
+    public class RouteFrom : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
