@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Input;
 using System.Diagnostics;
+using CykeMaps.UI.Navigation;
 
 namespace CykeMaps.UI
 {
@@ -27,7 +28,7 @@ namespace CykeMaps.UI
         private void Small_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Debug.WriteLine("Small_Tapped");
-            if (DataContext != null) MainPage.MainNavigationManager.ShowLocation(DataContext as ILocation);
+            if (DataContext != null) NavigationManager.Current.ShowLocation(DataContext as ILocation);
             this.Focus(FocusState.Pointer);
             //VisualStateManager.GoToState(this, "FullPin", true);
         }

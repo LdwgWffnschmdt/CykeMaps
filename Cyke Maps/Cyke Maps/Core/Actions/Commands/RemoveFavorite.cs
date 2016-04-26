@@ -1,4 +1,5 @@
 ﻿using CykeMaps.Core.Location;
+using CykeMaps.UI.Navigation;
 using CykeMaps.UI.Sheets;
 using System;
 using System.Windows.Input;
@@ -26,9 +27,9 @@ namespace CykeMaps.Core.Actions.Commands
             if (parameter is ILocation && parameter is Favorite)
             {
                 await (parameter as Favorite).Delete();
-                if (MainPage.MainNavigationManager.SheetFrame.SourcePageType == typeof(LocationSheet))
+                if (NavigationManager.Current.SheetFrame.SourcePageType == typeof(LocationSheet))
                 {
-                    MainPage.MainNavigationManager.NavigateBack();
+                    NavigationManager.Current.NavigateBack();
                 }
             }
         }

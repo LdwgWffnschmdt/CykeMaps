@@ -12,7 +12,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using CykeMaps.Core.Route;
-using Windows.UI.Xaml.Controls.Maps;
+using CykeMaps.Core.Route.RouteRequest;
+using CykeMaps.Core;
 
 namespace CykeMaps.UI.Navigation
 {
@@ -34,7 +35,7 @@ namespace CykeMaps.UI.Navigation
         /// <summary>
 		/// This holds the instance to the Only NavigationManager in this app.
 		/// </summary>
-		public static NavigationManager Instance { get; protected set; }
+		public static NavigationManager Current { get; protected set; }
 
         /// <summary>
         /// This will hold the reference to the frame that is to be manipulated.
@@ -68,14 +69,14 @@ namespace CykeMaps.UI.Navigation
         public NavigationManager(ref Frame frame, ref ScrollViewer scrollViewer)
         {
             // Check is the instance doesnt already exist.
-            if (Instance != null)
+            if (Current != null)
             {
                 //if there is an instance in the app already present then simply throw an error.
                 throw new Exception("Only one navigation manager can exist in a App.");
             }
 
             // Setting the instance to the static instance field.
-            Instance = this;
+            Current = this;
 
             // Setting the frame / scrollViewer reference.
             this.SheetFrame = frame;
@@ -261,7 +262,7 @@ namespace CykeMaps.UI.Navigation
             // Give the Statusbar a white Background if the SheetVisibility is Full
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                if (e.NextView.VerticalOffset == scrollViewer.ScrollableHeight && MainPage.MainSettingsManager.AppTheme != ElementTheme.Light)
+                if (e.NextView.VerticalOffset == scrollViewer.ScrollableHeight && SettingsManager.Current.AppTheme != ElementTheme.Light)
                 {
                     statusBar.ForegroundColor = Colors.LightGray;
                 }
@@ -436,11 +437,53 @@ namespace CykeMaps.UI.Navigation
             State showOnMapState = new State()
             {
                 MapHeading = 90,
-                //MapElements = new List<MapElement>() { route }; // TODO : BLALBLAB
+                //MapElements = new List<MapElement>() { route }; // TODO: BLALBLAB
                 SheetVisibility = Visibility.Hidden
             };
 
             NavigateTo(showOnMapState, null);
+        }
+
+        public void RouteTo(ILocation destination)
+        {
+            State routeToState = new State()
+            {
+                SheetVisibility = Visibility.Full,
+                Sheet = typeof(RouteRequestSheet)
+            };
+
+            KomootRouteRequest request = new KomootRouteRequest(destination);
+
+            NavigateTo(routeToState, request);
+        }
+
+        public void RouteFrom(ILocation start)
+        {
+            State routeToState = new State()
+            {
+                SheetVisibility = Visibility.Full,
+                Sheet = typeof(RouteRequestSheet)
+            };
+
+            KomootRouteRequest request = new KomootRouteRequest(new BasicLocation(), start);
+
+            NavigateTo(routeToState, request);
+        }
+
+        public void ShowRoute(IRoute route)
+        {
+            State routeToState = new State()
+            {
+                SheetVisibility = Visibility.Hidden
+            };
+
+            Windows.UI.Xaml.Controls.Maps.MapPolyline line = new Windows.UI.Xaml.Controls.Maps.MapPolyline();
+            line.Path = new Windows.Devices.Geolocation.Geopath(route.Track);
+
+
+            MainPage.Current.MapMain.MapElements.Add(line);
+
+            NavigateTo(routeToState, null);
         }
 
         public void AddFavorite(ILocation location)

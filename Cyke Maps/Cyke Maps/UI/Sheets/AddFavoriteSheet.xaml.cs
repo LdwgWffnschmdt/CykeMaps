@@ -149,12 +149,12 @@ namespace CykeMaps.UI.Sheets
                 MapZoomLevel = 14
             };
 
-            MainPage.MainNavigationManager.NavigateTo(favState, favorite);
+            NavigationManager.Current.NavigateTo(favState, favorite);
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
-            MainPage.MainNavigationManager.NavigateBack();
+            NavigationManager.Current.NavigateBack();
         }
     }
 }

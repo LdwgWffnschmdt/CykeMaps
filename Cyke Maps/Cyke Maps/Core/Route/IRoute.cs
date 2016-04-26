@@ -1,4 +1,5 @@
 ﻿using CykeMaps.Core.Actions;
+using CykeMaps.Core.Location;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.Devices.Geolocation;
@@ -15,15 +16,15 @@ namespace CykeMaps.Core.Route
 
         GeoboundingBox BoundingBox { get; set; }
 
-        IEnumerable<BasicGeoposition> Positions { get; set; }
+        IEnumerable<BasicGeoposition> Track { get; set; }
 
-        BasicGeoposition StartPoint { get; set; }
+        ILocation StartPoint { get; set; }
 
-        double Distance { get; set; }
+        double? Distance { get; set; }
 
-        double Downhill { get; set; }
+        double? Downhill { get; set; }
 
-        double Uphill { get; set; }
+        double? Uphill { get; set; }
 
 
 

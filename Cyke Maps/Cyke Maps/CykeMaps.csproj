@@ -154,6 +154,9 @@
     <Compile Include="UI\Sheets\LibrarySheet.xaml.cs">
       <DependentUpon>LibrarySheet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Sheets\RouteRequestSheet.xaml.cs">
+      <DependentUpon>RouteRequestSheet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Sheets\LocationSheet.xaml.cs">
       <DependentUpon>LocationSheet.xaml</DependentUpon>
     </Compile>
@@ -270,6 +273,10 @@
     <Page Include="UI\Sheets\LibrarySheet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Sheets\RouteRequestSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Sheets\LocationSheet.xaml">
       <SubType>Designer</SubType>

@@ -102,7 +102,7 @@ namespace CykeMaps.Core
                             OnBackAction = new Action(EmptySearchQuery)
                         };
                         searchQueryBackStateSet = true;
-                        MainPage.MainNavigationManager.NavigateTo(EmptySearchQueryState, null);
+                        NavigationManager.Current.NavigateTo(EmptySearchQueryState, null);
                     }
 
                     string delayedText;
@@ -130,7 +130,7 @@ namespace CykeMaps.Core
             // If the Search Query is already empty
             if (searchQuery == "")
             {
-                MainPage.MainNavigationManager.NavigateBack();
+                NavigationManager.Current.NavigateBack();
                 return;
             }
 
@@ -140,19 +140,19 @@ namespace CykeMaps.Core
         /// <summary>
         /// This holds the instance to the Only LibraryManager in this app.
         /// </summary>
-        public static LibraryManager Instance { get; protected set; }
+        public static LibraryManager Current { get; protected set; }
 
         public LibraryManager()
         {
             // Check is the instance doesnt already exist.
-            if (Instance != null)
+            if (Current != null)
             {
                 //if there is an instance in the app already present then simply throw an error.
                 throw new Exception("Only one library manager can exist in a App.");
             }
 
             // Setting the instance to the static instance field.
-            Instance = this;
+            Current = this;
             
 
 

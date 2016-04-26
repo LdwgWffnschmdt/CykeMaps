@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using System;
+using CykeMaps.Core.Location;
 
 namespace CykeMaps.Core.Route
 {
@@ -35,16 +36,7 @@ namespace CykeMaps.Core.Route
                     new ShareAction()
                 };
         }
-
-        private Point normalizedAnchorPoint = new Point() { X = 0.5, Y = 1 };
-        public Point NormalizedAnchorPoint
-        {
-            get
-            {
-                return normalizedAnchorPoint;
-            }
-        }
-
+        
         private string name;
 
         public string Name
@@ -124,68 +116,66 @@ namespace CykeMaps.Core.Route
             }
         }
 
-        public IEnumerable<BasicGeoposition> Positions
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
 
+        private IEnumerable<BasicGeoposition> track;
+
+        public IEnumerable<BasicGeoposition> Track
+        {
+            get { return track; }
             set
             {
-                throw new NotImplementedException();
+                track = value;
+                OnPropertyChanged();
             }
         }
 
-        public BasicGeoposition StartPoint
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        private ILocation startPoint;
 
+        public ILocation StartPoint
+        {
+            get { return startPoint; }
             set
             {
-                throw new NotImplementedException();
+                startPoint = value;
+                OnPropertyChanged();
             }
         }
 
-        public double Distance
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
 
+        private double? distance;
+
+        public double? Distance
+        {
+            get { return distance; }
             set
             {
-                throw new NotImplementedException();
+                distance = value;
+                OnPropertyChanged();
             }
         }
 
-        public double Downhill
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        private double? uphill;
 
+        public double? Uphill
+        {
+            get { return uphill; }
             set
             {
-                throw new NotImplementedException();
+                uphill = value;
+                OnPropertyChanged();
             }
         }
 
-        public double Uphill
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
 
+        private double? downhill;
+
+        public double? Downhill
+        {
+            get { return downhill; }
             set
             {
-                throw new NotImplementedException();
+                downhill = value;
+                OnPropertyChanged();
             }
         }
     }

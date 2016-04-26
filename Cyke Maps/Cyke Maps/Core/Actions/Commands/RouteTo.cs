@@ -1,4 +1,5 @@
 ﻿using CykeMaps.Core.Location;
+using CykeMaps.UI.Navigation;
 using System;
 using System.Windows.Input;
 
@@ -22,7 +23,7 @@ namespace CykeMaps.Core.Actions.Commands
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            if (parameter is ILocation) NavigationManager.Current.RouteTo(parameter as ILocation);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CykeMaps.Core;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -91,7 +92,7 @@ namespace CykeMaps
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
             
-            MainPage.MainSettingsManager.SaveSettings();
+            SettingsManager.Current.SaveSettings();
             //MainPage.StopTracking();
 
             deferral.Complete();

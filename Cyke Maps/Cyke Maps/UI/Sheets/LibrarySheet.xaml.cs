@@ -1,4 +1,6 @@
-﻿using CykeMaps.Core.Location;
+﻿using CykeMaps.Core;
+using CykeMaps.Core.Location;
+using CykeMaps.UI.Navigation;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -18,7 +20,7 @@ namespace CykeMaps.UI.Sheets
     /// </summary>
     public sealed partial class LibrarySheet : Page
     {
-        private CollectionViewSource ViewSource = MainPage.MainLibraryManager.FilteredLibraryViewSource;
+        private CollectionViewSource ViewSource = LibraryManager.Current.FilteredLibraryViewSource;
 
         public LibrarySheet()
         {
@@ -27,7 +29,7 @@ namespace CykeMaps.UI.Sheets
         
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.MainNavigationManager.NavigateTo(MainPage.MainNavigationManager.Settings, null);
+            NavigationManager.Current.NavigateTo(NavigationManager.Current.Settings, null);
         }
 
         private void EnableSelect(object sender, RoutedEventArgs e)
@@ -42,15 +44,15 @@ namespace CykeMaps.UI.Sheets
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MainPage.MainNavigationManager.ShowLocation((e.ClickedItem as Favorite));
+            NavigationManager.Current.ShowLocation((e.ClickedItem as Favorite));
         }
 
         private void ListViewItemInnerGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            if (MainPage.MainLibraryManager.SearchQuery == "") return;
+            if (LibraryManager.Current.SearchQuery == "") return;
             foreach (TextBlock tb in FindVisualChildren<TextBlock>(sender as Grid))
             {
-                var mySemanticTextQuery = new SemanticTextQuery(MainPage.MainLibraryManager.SearchQuery);
+                var mySemanticTextQuery = new SemanticTextQuery(LibraryManager.Current.SearchQuery);
                 IReadOnlyList<TextSegment> ranges = mySemanticTextQuery.Find(tb.Text);
                 HighlightRanges(tb, tb.Text, ranges);
             }

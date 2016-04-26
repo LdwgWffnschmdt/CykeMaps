@@ -1,10 +1,7 @@
-﻿using System;
+﻿using CykeMaps.Core.Location;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Devices.Geolocation;
 
 namespace CykeMaps.Core.Route.RouteRequest
 {
@@ -13,11 +10,10 @@ namespace CykeMaps.Core.Route.RouteRequest
         /// <summary>
         /// Start, Points in between and Finish
         /// </summary>
-        IEnumerable<BasicGeoposition> Waypoints { get; set; }
+        IList<ILocation> Waypoints { get; set; }
 
-        Task<BasicRoute> GetRoute();
+        Task<IRoute> GetRoute();
 
-        string GetParameters();
-        
+        bool Sendable { get; }
     }
 }

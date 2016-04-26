@@ -1,5 +1,6 @@
 ﻿using CykeMaps.Core.Location;
 using CykeMaps.Core.Route;
+using CykeMaps.UI.Navigation;
 using System;
 using System.Windows.Input;
 
@@ -24,8 +25,8 @@ namespace CykeMaps.Core.Actions.Commands
 
         public void Execute(object parameter)
         {
-            if (parameter is ILocation) MainPage.MainNavigationManager.ShowOnMap(parameter as ILocation);
-            if (parameter is IRoute) MainPage.MainNavigationManager.ShowOnMap(parameter as IRoute);
+            if (parameter is ILocation) NavigationManager.Current.ShowOnMap(parameter as ILocation);
+            if (parameter is IRoute) NavigationManager.Current.ShowOnMap(parameter as IRoute);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using CykeMaps.Core.Location;
+﻿using CykeMaps.Core.Actions;
+using CykeMaps.Core.Location;
+using CykeMaps.UI.Navigation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,8 +33,8 @@ namespace CykeMaps.UI.Sheets
                 {
                     GeocodingLocation geoLoc = location as GeocodingLocation;
 
-                    if (geoLoc.Status == null) GeocodingProgress.Visibility = Visibility.Visible;
-                    else GeocodingProgress.Visibility = Visibility.Collapsed;
+                    if (geoLoc.Status == null) GeocodingProgress.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    else GeocodingProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
             }
         }
@@ -212,7 +214,7 @@ namespace CykeMaps.UI.Sheets
             //VisualStateManager.GoToState(this, "Default", true);
 
             // Because we added a State with an OnGoBackAction for this
-            MainPage.MainNavigationManager.NavigateBack();
+            NavigationManager.Current.NavigateBack();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
@@ -220,7 +222,7 @@ namespace CykeMaps.UI.Sheets
             CancelAddEditFavorite();
 
             // Because we added a State with an OnGoBackAction for this
-            MainPage.MainNavigationManager.NavigateBack();
+            NavigationManager.Current.NavigateBack();
         }
 
         public void CancelAddEditFavorite()

@@ -37,49 +37,52 @@ namespace CykeMaps
             // Raise the PropertyChanged event, passing the name of the property whose value has changed.
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public static NavigationManager MainNavigationManager { get; private set; }
-        public static SettingsManager MainSettingsManager { get; private set; }
-        public static LibraryManager MainLibraryManager { get; private set; }
-
+        
         private CollectionViewSource MapElements = new CollectionViewSource();
 
         private StatusBar statusBar;
 
+        /// <summary>
+        /// This holds the instance to the Only MainPage in this app.
+        /// </summary>
+        public static MainPage Current { get; protected set; }
+
         public MainPage()
         {
-            if (MainLibraryManager == null)
+            // Check is the instance doesnt already exist.
+            if (Current != null)
             {
-                MainLibraryManager = new LibraryManager();
-                MainLibraryManager.PropertyChanged += MainLibraryManager_PropertyChanged;
+                //if there is an instance in the app already present then simply throw an error.
+                throw new Exception("Only one MainPage can exist in a App.");
             }
+
+            // This is a static public property that allows downstream pages to get a handle to the MainPage instance
+            // in order to call methods that are in this class.
+            Current = this;
+
+            // Create the LibraryManager
+            new LibraryManager();
+            LibraryManager.Current.PropertyChanged += LibraryManager_PropertyChanged;
 
             MapElements.IsSourceGrouped = false;
 
             this.InitializeComponent();
             (this.Content as FrameworkElement).DataContext = this;
-
+            
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
             
-            SearchBox.DataContext = MainLibraryManager;
+            SearchBox.DataContext = LibraryManager.Current;
 
             /////////////////////////////////////////////////////////// NAVIGATION MANAGER INITIALIZATION ////////////////////////////////
+            new NavigationManager(ref SheetsFrame, ref scrollViewer );
+            NavigationManager.Current.PropertyChanged += NavigationManager_PropertyChanged;
             
+            // Create the SettingsManager
+            new SettingsManager(ref MapMain);
+            this.RequestedTheme = SettingsManager.Current.AppTheme;
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
-            if (MainNavigationManager == null)
-            {
-                MainNavigationManager = new NavigationManager(ref SheetsFrame, ref scrollViewer );
-                MainNavigationManager.PropertyChanged += MainNavigationManager_PropertyChanged;
-            }
-
-            if (MainSettingsManager == null)
-            {
-                MainSettingsManager = new SettingsManager(ref MapMain);
-                this.RequestedTheme = MainSettingsManager.AppTheme;
-                MainSettingsManager.PropertyChanged += MainSettingsManager_PropertyChanged;
-
-                MapInteractionButtons.DataContext = MainSettingsManager;
-            }
+            MapInteractionButtons.DataContext = SettingsManager.Current;
 
             #region TitleBar / StatusBar
 
@@ -123,23 +126,23 @@ namespace CykeMaps
 
             // Center the map to the last position.
             MapMain.Center = new Geopoint(new BasicGeoposition() {
-                Latitude = MainSettingsManager.LastMapCenter.X,
-                Longitude = MainSettingsManager.LastMapCenter.Y
+                Latitude = SettingsManager.Current.LastMapCenter.X,
+                Longitude = SettingsManager.Current.LastMapCenter.Y
             });
-            MapMain.ZoomLevel = MainSettingsManager.LastMapZoom;
-            MapMain.Heading = MainSettingsManager.LastMapHeading;
-            MapMain.DesiredPitch = MainSettingsManager.LastMapPitch;
+            MapMain.ZoomLevel = SettingsManager.Current.LastMapZoom;
+            MapMain.Heading = SettingsManager.Current.LastMapHeading;
+            MapMain.DesiredPitch = SettingsManager.Current.LastMapPitch;
 
-            MapMain.ZoomInteractionMode = MainSettingsManager.ShowZoomControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
-            MapMain.RotateInteractionMode = MainSettingsManager.ShowRotationControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
-            MapMain.TiltInteractionMode = MainSettingsManager.ShowTiltControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
+            MapMain.ZoomInteractionMode = SettingsManager.Current.ShowZoomControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
+            MapMain.RotateInteractionMode = SettingsManager.Current.ShowRotationControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
+            MapMain.TiltInteractionMode = SettingsManager.Current.ShowTiltControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
 
 
 
             GeolocationPin = new MapGeolocationPin();
             MapMain.Children.Add(GeolocationPin);
             MapControl.SetNormalizedAnchorPoint(GeolocationPin, new Point(0.5, 1));
-            MapControl.SetLocation(GeolocationPin, MainSettingsManager.LastGeoPosition.ToGeopoint());
+            MapControl.SetLocation(GeolocationPin, SettingsManager.Current.LastGeoPosition.ToGeopoint());
 
             AccuracyCircle = new MapPolygon()
             {
@@ -156,57 +159,57 @@ namespace CykeMaps
             SetSnapPoints();
         }
 
-        private void MainSettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "AppTheme")
             {
-                this.RequestedTheme = MainSettingsManager.AppTheme;
+                this.RequestedTheme = SettingsManager.Current.AppTheme;
             }
         }
 
-        private void MainLibraryManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void LibraryManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            MapElements.Source = new ObservableCollection<Favorite>(MainLibraryManager.FilteredLibrary.Items.SelectMany(b => b.Items
-                                                                                                   .SelectMany(c => c.Items
-                                                                                                       .Select(a => a as Favorite))));
+            MapElements.Source = new ObservableCollection<Favorite>(LibraryManager.Current.FilteredLibrary.Items.SelectMany(b => b.Items
+                                                                                                                .SelectMany(c => c.Items
+                                                                                                                .Select(a => a as Favorite))));
         }
 
-        private void MainNavigationManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void NavigationManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "SharedState")
             {
-                if     (MainNavigationManager.SharedState.HasMapCenter &&
-                        MainNavigationManager.SharedState.HasMapZoomLevel &&
-                        MainNavigationManager.SharedState.HasMapHeading &&
-                        MainNavigationManager.SharedState.HasMapPitch)
-                            MapMain.TrySetViewAsync(MainNavigationManager.SharedState.MapCenter,
-                                                    MainNavigationManager.SharedState.MapZoomLevel,
-                                                    MainNavigationManager.SharedState.MapHeading,
-                                                    MainNavigationManager.SharedState.MapPitch);
-                else if (MainNavigationManager.SharedState.HasMapCenter &&
-                         MainNavigationManager.SharedState.HasMapZoomLevel &&
-                         MainNavigationManager.SharedState.HasMapPitch)
-                            MapMain.TrySetViewAsync(MainNavigationManager.SharedState.MapCenter,
-                                                    MainNavigationManager.SharedState.MapZoomLevel,
-                                                    MainNavigationManager.SharedState.MapHeading,
+                if     (NavigationManager.Current.SharedState.HasMapCenter &&
+                        NavigationManager.Current.SharedState.HasMapZoomLevel &&
+                        NavigationManager.Current.SharedState.HasMapHeading &&
+                        NavigationManager.Current.SharedState.HasMapPitch)
+                            MapMain.TrySetViewAsync(NavigationManager.Current.SharedState.MapCenter,
+                                                    NavigationManager.Current.SharedState.MapZoomLevel,
+                                                    NavigationManager.Current.SharedState.MapHeading,
+                                                    NavigationManager.Current.SharedState.MapPitch);
+                else if (NavigationManager.Current.SharedState.HasMapCenter &&
+                         NavigationManager.Current.SharedState.HasMapZoomLevel &&
+                         NavigationManager.Current.SharedState.HasMapPitch)
+                            MapMain.TrySetViewAsync(NavigationManager.Current.SharedState.MapCenter,
+                                                    NavigationManager.Current.SharedState.MapZoomLevel,
+                                                    NavigationManager.Current.SharedState.MapHeading,
                                                     null);
-                else if (MainNavigationManager.SharedState.HasMapCenter &&
-                         MainNavigationManager.SharedState.HasMapZoomLevel)
-                            MapMain.TrySetViewAsync(MainNavigationManager.SharedState.MapCenter,
-                                                    MainNavigationManager.SharedState.MapZoomLevel);
+                else if (NavigationManager.Current.SharedState.HasMapCenter &&
+                         NavigationManager.Current.SharedState.HasMapZoomLevel)
+                            MapMain.TrySetViewAsync(NavigationManager.Current.SharedState.MapCenter,
+                                                    NavigationManager.Current.SharedState.MapZoomLevel);
 
-                else if (MainNavigationManager.SharedState.HasMapCenter)
-                            MapMain.TrySetViewAsync(MainNavigationManager.SharedState.MapCenter);
+                else if (NavigationManager.Current.SharedState.HasMapCenter)
+                            MapMain.TrySetViewAsync(NavigationManager.Current.SharedState.MapCenter);
 
 
-                if (MainNavigationManager.SharedState.HasMapElements)
+                if (NavigationManager.Current.SharedState.HasMapElements)
                 {
                     // TODO: Ensure the map shows the elements
                     /*BasicGeoposition Position1 = new BasicGeoposition();
 
                     BasicGeoposition Position2 = new BasicGeoposition();
 
-                    foreach (MapElement element in MainNavigationManager.SharedState.MapElements)
+                    foreach (MapElement element in NavigationManager.Current.SharedState.MapElements)
                     {
                         BasicGeoposition elementPosition = MapControl.GetLocation(element).Position;
                         if (Position1.Latitude < elementPosition.Latitude) ;
@@ -219,11 +222,11 @@ namespace CykeMaps
                 }
 
 
-                if (MainNavigationManager.SharedState.SheetVisibility != UI.Navigation.Visibility.Full)
+                if (NavigationManager.Current.SharedState.SheetVisibility != UI.Navigation.Visibility.Full)
                 {
-                    MapMain.ZoomInteractionMode = MainSettingsManager.ShowZoomControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
-                    MapMain.RotateInteractionMode = MainSettingsManager.ShowRotationControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
-                    MapMain.TiltInteractionMode = MainSettingsManager.ShowTiltControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
+                    MapMain.ZoomInteractionMode = SettingsManager.Current.ShowZoomControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
+                    MapMain.RotateInteractionMode = SettingsManager.Current.ShowRotationControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
+                    MapMain.TiltInteractionMode = SettingsManager.Current.ShowTiltControl ? MapInteractionMode.GestureAndControl : MapInteractionMode.GestureOnly;
                 }
                 else
                 {
@@ -252,7 +255,7 @@ namespace CykeMaps
         {
             if (SheetsFrame.CurrentSourcePageType == typeof(LibrarySheet))
             {
-                MainNavigationManager.NavigateTo(MainNavigationManager.VisibilityFull, null);
+                NavigationManager.Current.NavigateTo(NavigationManager.Current.VisibilityFull, null);
             }
             else
             {
@@ -261,7 +264,7 @@ namespace CykeMaps
                     Sheet = typeof(LibrarySheet),
                     SheetVisibility = UI.Navigation.Visibility.Full
                 };
-                MainNavigationManager.NavigateTo(SearchState, null);
+                NavigationManager.Current.NavigateTo(SearchState, null);
             }
         }
 
@@ -269,7 +272,7 @@ namespace CykeMaps
         {
             /*if (SearchBox.Text == "") // Only if the user didn't search for anything --> Go back to normal
             {
-                MainNavigationManager.NavigateTo(MainNavigationManager.VisibilityHidden, null);
+                NavigationManager.Current.NavigateTo(NavigationManager.Current.VisibilityHidden, null);
             }*/
         }
 
@@ -322,7 +325,7 @@ namespace CykeMaps
             MapControl.SetLocation(newPin, args.Location);
             MapControl.SetNormalizedAnchorPoint(newPin, new Point(0.5, 1));
 
-            MainNavigationManager.ShowLocation(TapLocation);
+            NavigationManager.Current.ShowLocation(TapLocation);
         }
 
         private void MapMain_MapTapped(Windows.UI.Xaml.Controls.Maps.MapControl sender, Windows.UI.Xaml.Controls.Maps.MapInputEventArgs args)
@@ -390,7 +393,7 @@ namespace CykeMaps
                         // 
                         Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                         {
-                            MainSettingsManager.LastGeoPosition = currentPosition.Point.ToPoint();
+                            SettingsManager.Current.LastGeoPosition = currentPosition.Point.ToPoint();
                         });
                     }, TimeSpan.FromSeconds(10));
 

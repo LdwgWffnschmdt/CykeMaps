@@ -128,7 +128,7 @@ namespace CykeMaps.Core.Location
             }
 
             // Reload the Favorites
-            MainPage.MainLibraryManager.Reload(ReloadParameter.Favorites);
+            LibraryManager.Current.Reload(ReloadParameter.Favorites);
         }
 
         public async Task Delete()
@@ -156,7 +156,7 @@ namespace CykeMaps.Core.Location
 
 
             // Reload the Favorites
-            MainPage.MainLibraryManager.Reload(ReloadParameter.Favorites);
+            LibraryManager.Current.Reload(ReloadParameter.Favorites);
         }
 
         //public static async Task<T> ReadObjectFromXmlFileAsync<T>(string filename)

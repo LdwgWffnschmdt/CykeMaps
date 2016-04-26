@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using CykeMaps.Core;
 
 namespace CykeMaps.UI.Sheets
 {
@@ -23,14 +23,14 @@ namespace CykeMaps.UI.Sheets
         public SettingsSheet()
         {
             this.InitializeComponent();
-            (this.Content as FrameworkElement).DataContext = MainPage.MainSettingsManager; // For Binding
+            (this.Content as FrameworkElement).DataContext = SettingsManager.Current; // For Binding
             
             ThemeComboBox.ItemsSource = ThemeEnum;
         }
 
         private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainPage.MainSettingsManager.AppTheme = (ElementTheme)ThemeComboBox.SelectedValue;
+            SettingsManager.Current.AppTheme = (ElementTheme)ThemeComboBox.SelectedValue;
         }
         
         private static readonly Dictionary<ElementTheme, string> ThemeEnumMapping = new Dictionary<ElementTheme, string>()

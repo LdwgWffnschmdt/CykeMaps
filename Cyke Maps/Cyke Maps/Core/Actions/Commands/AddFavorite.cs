@@ -1,4 +1,5 @@
 ﻿using CykeMaps.Core.Location;
+using CykeMaps.UI.Navigation;
 using System;
 using System.Windows.Input;
 
@@ -24,7 +25,7 @@ namespace CykeMaps.Core.Actions.Commands
         {
             if (parameter is ILocation && !(parameter is Favorite))
             {
-                MainPage.MainNavigationManager.AddFavorite((ILocation) parameter);
+                NavigationManager.Current.AddFavorite((ILocation) parameter);
             }
         }
     }

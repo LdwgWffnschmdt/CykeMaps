@@ -28,19 +28,19 @@ namespace CykeMaps.Core
         /// <summary>
         /// This holds the instance to the Only SettingsManager in this app.
         /// </summary>
-        public static SettingsManager Instance { get; protected set; }
+        public static SettingsManager Current { get; protected set; }
 
         public SettingsManager(ref MapControl MapMain)
         {
             // Check is the instance doesnt already exist.
-            if (Instance != null)
+            if (Current != null)
             {
                 //if there is an instance in the app already present then simply throw an error.
                 throw new Exception("Only one settings manager can exist in a App.");
             }
 
             // Setting the instance to the static instance field.
-            Instance = this;
+            Current = this;
 
             this.MapMain = MapMain;
 

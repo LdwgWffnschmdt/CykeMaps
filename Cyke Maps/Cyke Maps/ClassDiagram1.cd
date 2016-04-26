@@ -30,16 +30,16 @@
       <FileName>Core\Location\GeocodingLocation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CykeMaps.Core.Route.BasicRoute" Collapsed="true">
+  <Class Name="CykeMaps.Core.Route.BasicRoute">
     <Position X="72.75" Y="18" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAIAAgACAgIAJAAAQAgCAEIAhgAAACAAAACgg=</HashCode>
+      <HashCode>AAAICAAAIEAgAiBAIAJAAAQAwGAEIAhgAAAAAAAACAg=</HashCode>
       <FileName>Core\Route\BasicRoute.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CykeMaps.Core.Route.FavoriteRoute" Collapsed="true">
-    <Position X="72.75" Y="19.25" Width="1.5" />
+    <Position X="74.75" Y="19.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAQAAAAEACAAAAAgEAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Core\Route\FavoriteRoute.cs</FileName>
@@ -55,7 +55,7 @@
   <Interface Name="CykeMaps.Core.Route.IRoute" Collapsed="true">
     <Position X="72.75" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAgAAAgAAJAAAQAACAAIABAAAAAAAAACAg=</HashCode>
+      <HashCode>AAAAAAAAIEAgAAAAAAJAAAQAACAAIABAAAAAAAAACAg=</HashCode>
       <FileName>Core\Route\IRoute.cs</FileName>
     </TypeIdentifier>
   </Interface>
