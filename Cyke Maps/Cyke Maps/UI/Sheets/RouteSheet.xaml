@@ -1,0 +1,146 @@
+﻿<Page
+    x:Class="CykeMaps.UI.Sheets.RouteSheet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UI="using:CykeMaps.UI"
+    xmlns:Actions="using:CykeMaps.Core.Actions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" >
+
+    <Grid x:Name="RootGrid"
+          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="States">
+                <VisualState x:Name="Default"/>
+                <VisualState x:Name="AddEditFavoriteState">
+                    <VisualState.Setters>
+                        <Setter Target="NameTextBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="scrollViewer.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="TextBoxName.(UIElement.Visibility)" Value="Visible"/>
+                        <Setter Target="AddEditScrollViewer.(UIElement.Visibility)" Value="Visible"/>
+                        <Setter Target="AddEditCommandBar.(UIElement.Visibility)" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ProgressBar Name="GeocodingProgress" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="Collapsed"/>
+            <TextBlock Grid.Row="1" x:Name="NameTextBlock" Text="{x:Bind Route.Name, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource TitleTextBlockStyle}" Padding="14,8,0,0"/>
+            <SymbolIcon Grid.Row="1" Grid.Column="1" Symbol="{Binding Route.Symbol}" Margin="0,0,8,0" />
+        </Grid>
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="1">
+            <StackPanel Margin="12,0,12,12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Distance" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,8,8"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Route.Distance}" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Duration" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,8,8"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Route.Duration}" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Uphill" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,8,8"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Route.Uphill}" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Downhill" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,8,8"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Route.Downhill}" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                </Grid>
+                <TextBlock Text="{Binding Route.Description}" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,8"/>
+                <ItemsControl ItemsSource="{Binding Route.Actions}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UI:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="Actions:IAction">
+                            <HyperlinkButton MinWidth="0" MinHeight="0" Margin="0,0,12,12" Command="{Binding Action}" CommandParameter="{Binding DataContext.Route, ElementName=RootGrid}" Visibility="{Binding Action.CanExecute}" >
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <SymbolIcon Symbol="{Binding Symbol}" RenderTransformOrigin="0.5,0.5" Margin="0,0,6,0">
+                                        <SymbolIcon.RenderTransform>
+                                            <CompositeTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        </SymbolIcon.RenderTransform>
+                                    </SymbolIcon>
+                                    <TextBlock Text="{Binding Text}" FontSize="14" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding Route.SecondaryActions}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UI:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <HyperlinkButton MinWidth="0" MinHeight="0" Margin="0,0,12,12" Command="{Binding Action}" CommandParameter="{Binding DataContext.Route, ElementName=RootGrid}" Visibility="{Binding Action.CanExecute}" ToolTipService.ToolTip="{Binding Action.Text}">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="{Binding Symbol}" RenderTransformOrigin="0.5,0.5" Margin="0,0,6,0">
+                                        <SymbolIcon.RenderTransform>
+                                            <CompositeTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        </SymbolIcon.RenderTransform>
+                                    </SymbolIcon>
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+        <CommandBar x:Name="RouteCommandBar" Grid.Row="2" Visibility="Collapsed" >
+        </CommandBar>
+
+        <!-- Add / Edit Favorite Part-->
+
+        <TextBox x:Name="TextBoxName" Text="{Binding Route.Name, Mode=TwoWay}" PlaceholderText="{Binding Route.Name}" VerticalAlignment="Top" Padding="14,8" BorderThickness="0" FontSize="24" Visibility="Collapsed"/>
+        <ScrollViewer x:Name="AddEditScrollViewer" Grid.Row="1" Visibility="Collapsed">
+            <StackPanel Margin="12,0,12,12">
+                <TextBlock Text="Adresse" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <TextBlock Text="Beschreibung" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <TextBox x:Name="TextBoxDescription" Text="{Binding Route.Description, Mode=TwoWay}" PlaceholderText="{Binding Route.Description}" Margin="0,0,0,8"/>
+                <TextBlock Text="Symbol" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <ComboBox x:Name="Symbol" SelectedItem="{Binding Route.Symbol, Mode=TwoWay}" ItemsSource="{Binding SymbolList}" Margin="0,0,0,8">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="Symbol">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <SymbolIcon Symbol="{Binding}" Margin="2,0,8,0"/>
+                                <TextBlock Text="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Text="Collection" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,8"/>
+                <AutoSuggestBox x:Name="TextBoxCollection" Text="{Binding Collection, Mode=TwoWay}" QueryIcon="Folder" PlaceholderText="Unsortiert" ItemsSource="{Binding CollectionList}" Margin="0,0,0,8"/>
+            </StackPanel>
+        </ScrollViewer>
+        <CommandBar x:Name="AddEditCommandBar" Grid.Row="2" Visibility="Collapsed">
+            <AppBarButton Icon="Accept" Label="Fertig" Click="Accept" IsEnabled="{Binding Creatable}"/>
+            <AppBarButton Icon="Cancel" Label="Abrechen" Click="Cancel"/>
+        </CommandBar>
+    </Grid>
+</Page>

@@ -12,6 +12,7 @@ using System.Globalization;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using CykeMaps.UI.Navigation;
+using CykeMaps.Core.Route;
 
 namespace CykeMaps.Core
 {
@@ -19,7 +20,7 @@ namespace CykeMaps.Core
     {
         All,
         Favorites,
-        Tracks,
+        Routes,
         RecentSearches,
         RecentLocations
     }
@@ -35,8 +36,10 @@ namespace CykeMaps.Core
         }
 
         private StorageFolder FavoritesFolder;
+        private StorageFolder RoutesFolder;
 
-        private int FavoriteIndex = 0;
+        private const int FavoriteIndex = 0;
+        private const int RoutesIndex = 1;
 
         #region Unfiltered Library
 
@@ -158,7 +161,7 @@ namespace CykeMaps.Core
 
             library = new Collection<Collection<Collection<object>>>("Library");
             library.Items.Add(new Collection<Collection<object>>("Favoriten", "Library")); // Index 0
-            library.Items.Add(new Collection<Collection<object>>("Tracks", "Directions"));
+            library.Items.Add(new Collection<Collection<object>>("Routes", "Directions"));
             library.Items.Add(new Collection<Collection<object>>("Recent Searches", "Find"));
             library.Items.Add(new Collection<Collection<object>>("Recent Locations", "MapPin"));
 
@@ -167,7 +170,7 @@ namespace CykeMaps.Core
             // FILTERED LIBRARY
             filteredLibrary = new Collection<Collection<Collection<object>>>("Library");
             filteredLibrary.Items.Add(new Collection<Collection<object>>("Favoriten", "Library")); // Index 0
-            filteredLibrary.Items.Add(new Collection<Collection<object>>("Tracks", "Directions"));
+            filteredLibrary.Items.Add(new Collection<Collection<object>>("Routes", "Directions"));
             filteredLibrary.Items.Add(new Collection<Collection<object>>("Recent Searches", "Find"));
             filteredLibrary.Items.Add(new Collection<Collection<object>>("Recent Locations", "MapPin"));
 
@@ -235,6 +238,60 @@ namespace CykeMaps.Core
             }
         }
 
+        private async Task LoadRoutes()
+        {
+            RoutesFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Routes", CreationCollisionOption.OpenIfExists);
+
+            IReadOnlyList<StorageFolder> collections = await RoutesFolder.GetFoldersAsync();
+
+            // Empty the existing list
+            library.Items[RoutesIndex].Items.Clear();
+            filteredLibrary.Items[RoutesIndex].Items.Clear();
+
+            foreach (StorageFolder collection in collections)
+            {
+                try
+                {
+                    Collection<object> col = new Collection<object>(collection.DisplayName, "SolidStar");
+
+                    var RouteFiles = await collection.GetFilesAsync();
+
+                    foreach (StorageFile file in RouteFiles)
+                    {
+                        FavoriteRoute fav = await new FavoriteRoute().LoadFromFile(file);
+                        fav.Collection = collection.DisplayName;
+                        col.Items.Add(fav);
+                    }
+
+                    library.Items[RoutesIndex].Items.Add(col);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+
+
+            // And the unsorted ones
+            try
+            {
+                Collection<object> col = new Collection<object>("Unsortiert", "OutlineStar");
+
+                var RouteFiles = await RoutesFolder.GetFilesAsync();
+
+                foreach (StorageFile file in RouteFiles)
+                {
+                    col.Items.Add(await new FavoriteRoute().LoadFromFile(file));
+                }
+
+                library.Items[RoutesIndex].Items.Add(col);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -245,6 +302,7 @@ namespace CykeMaps.Core
         public async Task Reload(ReloadParameter parameter)
         {
             if (parameter == ReloadParameter.All || parameter == ReloadParameter.Favorites) await LoadFavorites();
+            if (parameter == ReloadParameter.All || parameter == ReloadParameter.Routes) await LoadRoutes();
             await RefreshFilteredLibrary();
             OnPropertyChanged("Library");
         }
@@ -286,6 +344,41 @@ namespace CykeMaps.Core
 
                 i++;
             }
+
+
+
+            i = 0;
+            // Loop through the different Route Collections
+            foreach (Collection<object> favCollection in library.Items[RoutesIndex].Items)
+            {
+                //if (favCollection == null ||favCollection.Items == null) continue; // Maybe an empty folder could result in this...
+
+                // Does this Favorite Collection contain any Favorite that matches the Query?
+                var fr = from fFavs in favCollection.Items
+                         where (searchQuery == "" || // If there is no query everything is matched
+                               CultureInfo.CurrentCulture.CompareInfo.IndexOf((fFavs as FavoriteRoute).Name, SearchQuery, CompareOptions.IgnoreCase) >= 0 ||
+                               CultureInfo.CurrentCulture.CompareInfo.IndexOf((fFavs as FavoriteRoute).Description, SearchQuery, CompareOptions.IgnoreCase) >= 0)
+                         select fFavs;
+
+
+                // Maybe this Collection didn't exist in the last run
+                if (filteredLibrary.Items[RoutesIndex].Items.Count < i + 1)
+                {
+                    filteredLibrary.Items[RoutesIndex].Items.Add(new Collection<object>(favCollection.Name, favCollection.Symbol));
+                }
+
+                // There is a change
+                if (fr.Count() != filteredLibrary.Items[RoutesIndex].Items[i].Items.Count)
+                {
+                    changed = true;
+                    filteredLibrary.Items[RoutesIndex].Items[i].Items = new ObservableCollection<object>(fr);
+                }
+
+                i++;
+            }
+
+
+
 
 
             //  This will limit the amount of view refreshes 

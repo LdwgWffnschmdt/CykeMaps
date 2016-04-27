@@ -15,6 +15,16 @@
         public RemoveFavoriteAction() : base("UnFavorite", "Favorit entfernen", new Commands.RemoveFavorite()) { }
     }
 
+    public class SaveRouteAction : BasicAction
+    {
+        public SaveRouteAction() : base("Save", "Route speichern", new Commands.SaveRoute()) { }
+    }
+
+    public class EditSavedRouteAction : BasicAction
+    {
+        public EditSavedRouteAction() : base("Edit", "Route bearbeiten", new Commands.EditSavedRoute()) { }
+    }
+
     public class PinToStartAction : BasicAction
     {
         public PinToStartAction() : base("Pin", "An Start anheften", new Commands.PinToStart()) { }

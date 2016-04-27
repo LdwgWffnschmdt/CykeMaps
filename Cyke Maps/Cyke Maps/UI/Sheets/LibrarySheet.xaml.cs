@@ -1,5 +1,6 @@
 ﻿using CykeMaps.Core;
 using CykeMaps.Core.Location;
+using CykeMaps.Core.Route;
 using CykeMaps.UI.Navigation;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,7 +45,8 @@ namespace CykeMaps.UI.Sheets
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            NavigationManager.Current.ShowLocation((e.ClickedItem as Favorite));
+            if (e.ClickedItem is Favorite) NavigationManager.Current.ShowLocation((e.ClickedItem as Favorite));
+            else if (e.ClickedItem is FavoriteRoute) NavigationManager.Current.ShowRoute((e.ClickedItem as FavoriteRoute));
         }
 
         private void ListViewItemInnerGrid_Loaded(object sender, RoutedEventArgs e)

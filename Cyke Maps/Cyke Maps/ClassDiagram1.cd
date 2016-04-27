@@ -1,28 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="CykeMaps.Core.Location.BasicLocation" Collapsed="true">
-    <Position X="69" Y="18" Width="1.5" />
+  <Class Name="CykeMaps.Core.Location.BasicLocation">
+    <Position X="68.5" Y="18" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAIAAAAIAAgACAAIAIAAAQCgAIEIAgCAAACAAAACgA=</HashCode>
       <FileName>Core\Location\BasicLocation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CykeMaps.Core.Location.Favorite" Collapsed="true">
-    <Position X="67.75" Y="19.25" Width="1.5" />
+  <Class Name="CykeMaps.Core.Location.Favorite">
+    <Position X="70.5" Y="20.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAQAAAAEACAAAAAoEAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Core\Location\Favorite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CykeMaps.Core.Location.GeocodingLocation" Collapsed="true">
-    <Position X="70" Y="19.25" Width="1.5" />
+  <Class Name="CykeMaps.Core.Location.GeocodingLocation">
+    <Position X="70.5" Y="18.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <InheritanceLine Type="CykeMaps.Core.Location.BasicLocation" FixedToPoint="true">
       <Path>
-        <Point X="69.75" Y="18.562" />
-        <Point X="69.75" Y="18.875" />
-        <Point X="70.75" Y="18.875" />
-        <Point X="70.75" Y="19.25" />
+        <Point X="70" Y="19.409" />
+        <Point X="70.5" Y="19.409" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -32,21 +39,60 @@
   </Class>
   <Class Name="CykeMaps.Core.Route.BasicRoute">
     <Position X="72.75" Y="18" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAICAAAIEAgAiBAIAJAAAQAwGAEIAhgAAAAAAAACAg=</HashCode>
       <FileName>Core\Route\BasicRoute.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CykeMaps.Core.Route.FavoriteRoute" Collapsed="true">
-    <Position X="74.75" Y="19.25" Width="1.5" />
+  <Class Name="CykeMaps.Core.Route.FavoriteRoute">
+    <Position X="74.75" Y="18.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAQAAAAEACAAAAAgEAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Core\Route\FavoriteRoute.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="CykeMaps.Core.Route.RouteRequest.BasicRouteRequest">
+    <Position X="77" Y="18" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAABAAAAEAAIAAAAgAAgAIBIAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Core\Route\RouteRequest\BasicRouteRequest.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CykeMaps.Core.Route.RouteRequest.KomootRouteRequest">
+    <Position X="79" Y="18.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="CykeMaps.Core.Route.RouteRequest.KomootRouteRequest.Sportart" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Route\RouteRequest\KomootRouteRequest.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CykeMaps.Core.Route.RouteRequest.KomootRouteRequest.ResponseFormat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Route\RouteRequest\KomootRouteRequest.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAQABAFCAAAAABACAAggCABgAIAEAAAqAYgAAAAA=</HashCode>
+      <FileName>Core\Route\RouteRequest\KomootRouteRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="CykeMaps.Core.Location.ILocation" Collapsed="true">
-    <Position X="69" Y="16.75" Width="1.5" />
+    <Position X="68.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAgAAAAAAIAAAQAAAAAIAACAAAAAAAACAA=</HashCode>
       <FileName>Core\Location\ILocation.cs</FileName>
@@ -57,6 +103,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAIEAgAAAAAAJAAAQAACAAIABAAAAAAAAACAg=</HashCode>
       <FileName>Core\Route\IRoute.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CykeMaps.Core.Route.RouteRequest.IRouteRequest" Collapsed="true">
+    <Position X="77" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAEAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Route\RouteRequest\IRouteRequest.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

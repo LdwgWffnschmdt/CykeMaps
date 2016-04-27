@@ -4,6 +4,7 @@ using Geo.Gps;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Devices.Geolocation;
@@ -32,7 +33,7 @@ namespace CykeMaps.Core.Route
                 {
                     new PinToStartAction(),
                     new ShareAction(),
-                    new EditFavoriteAction()
+                    new EditSavedRouteAction()
                 };
         }
         
@@ -51,13 +52,24 @@ namespace CykeMaps.Core.Route
             Description = (objectFromXml.metadata.desc == null) ? "" : objectFromXml.metadata.desc;
             Timestamp = (objectFromXml.metadata.time == null) ? DateTime.Now : objectFromXml.metadata.time;
             Symbol = (objectFromXml.metadata.extensions.symbol == null) ? "" : objectFromXml.metadata.extensions.symbol;
-            /*Address = (objectFromXml.metadata.extensions.address == null) ? "" : objectFromXml.metadata.extensions.address;
-            Location = new Geopoint(new BasicGeoposition()
+            /*Address = (objectFromXml.metadata.extensions.address == null) ? "" : objectFromXml.metadata.extensions.address;*/
+
+            StartPoint = new BasicLocation()
             {
-                Latitude = (double) objectFromXml.wpt[0].lat,
-                Longitude = (double)objectFromXml.wpt[0].lon,
-                Altitude = (double)objectFromXml.wpt[0].ele
-            });*/
+                Location = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = (double)objectFromXml.wpt[0].lat,
+                    Longitude = (double)objectFromXml.wpt[0].lon,
+                    Altitude = (double)objectFromXml.wpt[0].ele
+                })
+            };
+
+            Track = objectFromXml.trk[0].trkseg[0].trkpt.Select(pos => new BasicGeoposition()
+            {
+                Latitude = (double)pos.lat,
+                Longitude = (double)pos.lon,
+                Altitude = (double)pos.ele
+            }).ToList();
 
             return this;
         }
@@ -73,7 +85,7 @@ namespace CykeMaps.Core.Route
             var filename = string.Join("_", Name.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.') + ".gpx";
 
             var serializer = new XmlSerializer(typeof(gpxType));
-            StorageFolder FavoritesFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Favorites", CreationCollisionOption.OpenIfExists);
+            StorageFolder FavoritesFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Routes", CreationCollisionOption.OpenIfExists);
             if (collection != "") FavoritesFolder = await FavoritesFolder.CreateFolderAsync(collection, CreationCollisionOption.OpenIfExists);
 
             StorageFile file = await FavoritesFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
@@ -89,7 +101,7 @@ namespace CykeMaps.Core.Route
                         desc = Description,
                         extensions = new extensionsType()
                         {
-                            symbol = Symbol
+                            symbol = Symbol // TODO: Add distance, uphill, downhill and so on
                         },
                         author = new personType()
                         {
@@ -98,23 +110,42 @@ namespace CykeMaps.Core.Route
                         timeSpecified = true,
                         time = Timestamp
                     },
-                    creator = "Cyke Maps"
-                    /*wpt = new wptType[]
+                    creator = "Cyke Maps",
+                    wpt = new wptType[]
                     {
                         new wptType()
                         {
-                            lat = (decimal)Location.Position.Latitude,
-                            lon = (decimal)Location.Position.Longitude,
+                            name = "StartPoint",
+                            lat = (decimal)StartPoint.Location.Position.Latitude,
+                            lon = (decimal)StartPoint.Location.Position.Longitude,
                             eleSpecified = true,
-                            ele = (decimal)Location.Position.Altitude
+                            ele = (decimal)StartPoint.Location.Position.Altitude
                         }
-                    }*/
+                    },
+                    trk = new trkType[] // Add a gpx track with the Track from the route
+                    {
+                        new trkType()
+                        {
+                            trkseg = new trksegType[] {
+                                new trksegType()
+                                {
+                                    trkpt = Track.Select(pos => new wptType() // Convert the Track from the route to a wptType[] Array
+                                        {
+                                            lat = (decimal)pos.Latitude,
+                                            lon = (decimal)pos.Longitude,
+                                            ele = (decimal)pos.Altitude,
+                                            eleSpecified = true
+                                        }).ToArray()
+                                }
+                            }
+                        }
+                    }
                 };
                 serializer.Serialize(stream, objectToSave);
             }
 
             // Reload the Favorites
-            LibraryManager.Current.Reload(ReloadParameter.Favorites);
+            LibraryManager.Current.Reload(ReloadParameter.Routes);
         }
 
         public async Task Delete()
@@ -126,7 +157,7 @@ namespace CykeMaps.Core.Route
             var fileName = string.Join("_", Name.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.') + ".gpx";
 
             // The Favorite should be in the Roaming Folder (or a subdirectory)
-            StorageFolder FavoritesFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Favorites", CreationCollisionOption.OpenIfExists);
+            StorageFolder FavoritesFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Routes", CreationCollisionOption.OpenIfExists);
 
             // If the Favorite is in a collection go into that folder
             if (Collection != "") FavoritesFolder = await FavoritesFolder.CreateFolderAsync(Collection, CreationCollisionOption.OpenIfExists);
@@ -142,7 +173,7 @@ namespace CykeMaps.Core.Route
 
 
             // Reload the Favorites
-            LibraryManager.Current.Reload(ReloadParameter.Favorites);
+            LibraryManager.Current.Reload(ReloadParameter.Routes);
         }
 
         //public static async Task<T> ReadObjectFromXmlFileAsync<T>(string filename)

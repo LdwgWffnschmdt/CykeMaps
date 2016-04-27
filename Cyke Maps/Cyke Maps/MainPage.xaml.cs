@@ -169,9 +169,8 @@ namespace CykeMaps
 
         private void LibraryManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            MapElements.Source = new ObservableCollection<Favorite>(LibraryManager.Current.FilteredLibrary.Items.SelectMany(b => b.Items
-                                                                                                                .SelectMany(c => c.Items
-                                                                                                                .Select(a => a as Favorite))));
+            MapElements.Source = new ObservableCollection<Favorite>(LibraryManager.Current.FilteredLibrary.Items[0].Items.SelectMany(b => b.Items
+                                                                                                                .Select(a => a as Favorite)));
         }
 
         private void NavigationManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -26,7 +26,7 @@ namespace CykeMaps.Core.Route
         {
             actions = new List<IAction>()
                 {
-                    new AddFavoriteAction(),
+                    new SaveRouteAction(),
                     new ShowOnMapAction()
                 };
 

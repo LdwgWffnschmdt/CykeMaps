@@ -14,6 +14,8 @@ using System.Diagnostics;
 using CykeMaps.Core.Route;
 using CykeMaps.Core.Route.RouteRequest;
 using CykeMaps.Core;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.Services.Maps;
 
 namespace CykeMaps.UI.Navigation
 {
@@ -474,16 +476,11 @@ namespace CykeMaps.UI.Navigation
         {
             State routeToState = new State()
             {
-                SheetVisibility = Visibility.Hidden
+                SheetVisibility = Visibility.Half,
+                Sheet = typeof(RouteSheet)
             };
 
-            Windows.UI.Xaml.Controls.Maps.MapPolyline line = new Windows.UI.Xaml.Controls.Maps.MapPolyline();
-            line.Path = new Windows.Devices.Geolocation.Geopath(route.Track);
-
-
-            MainPage.Current.MapMain.MapElements.Add(line);
-
-            NavigateTo(routeToState, null);
+            NavigateTo(routeToState, route);
         }
 
         public void AddFavorite(ILocation location)
@@ -520,6 +517,59 @@ namespace CykeMaps.UI.Navigation
                 State cancelAddEditFavoriteState = new State()
                 {
                     OnBackAction = new Action((SheetFrame.Content as LocationSheet).CancelAddEditFavorite)
+                };
+
+                NavigateTo(cancelAddEditFavoriteState, null);
+            }
+            else
+            {
+                throw new NotImplementedException();
+                /* editFavoriteState = new State()
+                {
+                    Sheet = typeof(EditFavoriteSheet),
+                    SheetVisibility = Visibility.Full,
+                    IsModal = true
+                };
+
+                NavigateTo(editFavoriteState, location);*/
+            }
+        }
+
+
+        public void SaveRoute(IRoute route)
+        {
+            if (SheetFrame.CurrentSourcePageType == typeof(RouteSheet))
+            {
+                (SheetFrame.Content as RouteSheet).AddEditFavorite(this, new RoutedEventArgs());
+                State cancelAddEditFavoriteState = new State()
+                {
+                    OnBackAction = new Action((SheetFrame.Content as RouteSheet).CancelAddEditFavorite)
+                };
+
+                NavigateTo(cancelAddEditFavoriteState, null);
+            }
+            else
+            {
+                State addFavoriteState = new State()
+                {
+                    Sheet = typeof(AddFavoriteSheet), // TODO: This seems totally wrong
+                    SheetVisibility = Visibility.Full,
+                    IsModal = true
+                };
+
+                NavigateTo(addFavoriteState, route);
+            }
+        }
+
+        public void EditSavedRoute(IRoute route)
+        {
+            if (SheetFrame.CurrentSourcePageType == typeof(RouteSheet))
+            {
+                (SheetFrame.Content as RouteSheet).AddEditFavorite(this, new RoutedEventArgs());
+
+                State cancelAddEditFavoriteState = new State()
+                {
+                    OnBackAction = new Action((SheetFrame.Content as RouteSheet).CancelAddEditFavorite)
                 };
 
                 NavigateTo(cancelAddEditFavoriteState, null);
