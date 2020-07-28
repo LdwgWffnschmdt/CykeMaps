@@ -1,6 +1,6 @@
 # Cyke Maps
 
-![Cyke Maps](/Cyke Maps/Cyke Maps/Assets/cykeWideTile.scale-200.png?raw=true "Cyke Maps Tile")
+<img src="./Cyke Maps/Cyke Maps/Assets/cykeWideTile.scale-200.png">
 
 This is a private Project to create a Universal Windows Maps Application primarily aimed at outdoor activities and the use of OpenStreetMap Data.
 
